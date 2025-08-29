@@ -4,7 +4,7 @@
 export ECALCALIB="$HOME/EcalCalibration"
 
 # Search path for all scripts in this repository macros + analysis scripts
-export ECALCALIB_PATH="$ECALCALIB/macros:$ECALCALIB/analysis:$ECALCALIB_PATH"
+export ECALCALIB_PATH="$ECALCALIB/g4macros:$ECALCALIB/analysis:$ECALCALIB_PATH"
 
 # Add to include paths so ROOT and Geant4 see your code automatically
 export ROOT_INCLUDE_PATH="$ECALCALIB/analysis:$ROOT_INCLUDE_PATH"
