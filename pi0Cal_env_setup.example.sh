@@ -29,9 +29,9 @@ _find_ecal_script() {
 #  Allow macro to be called by g4sbs
 g4sbs() {
   if [[ -n "$1" ]]; then
-    local resolved=$(_resolve_ecal_script "$1")
+    local found=$(_find_ecal_script "$1")
     shift
-    command g4sbs "$resolved" "$@"
+    command g4sbs "$found" "$@"
   else
     command g4sbs "$@"
   fi
@@ -40,9 +40,9 @@ g4sbs() {
 # Allows script to be called by analyzer
 analyzer() {
   if [[ -n "$1" ]]; then
-    local resolved=$(_resolve_ecal_script "$1")
+    local found=$(_find_ecal_script "$1")
     shift
-    command analyzer "$resolved" "$@"
+    command analyzer "$found" "$@"
   else
     command analyzer "$@"
   fi
