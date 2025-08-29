@@ -1,27 +1,34 @@
 # ------------------------ ECal Cal Script Environment Setup ------------------------
 
 # Cloned Repo location 
-export ECALCALIB="$HOME/EcalCalibration"
+export ECALCALIB="Path/to/EcalCalibration"
 
 # Search path for all scripts in this repository macros + analysis scripts
-export ECALCALIB_PATH="$ECALCALIB/g4macros:$ECALCALIB/analyzer_scripts
-:$ECALCALIB_PATH"
+export ECALCALIB_PATH=""
+export ECALCALIB_PATH="$ECALCALIB/g4macros:$ECALCALIB/analyzer_scripts:$ECALCALIB_PATH"
 
 # Add to include paths so ROOT and Geant4 see your code automatically
-export ROOT_INCLUDE_PATH="$ECALCALIB/analysis:$ROOT_INCLUDE_PATH"
-export CPLUS_INCLUDE_PATH="$ECALCALIB/include:$CPLUS_INCLUDE_PATH"
+export ROOT_INCLUDE_PATH="$ECALCALIB/analyzer_scripts:$ROOT_INCLUDE_PATH"
+export CPLUS_INCLUDE_PATH="$ECALCALIB/g4macros:$CPLUS_INCLUDE_PATH"
+
+#path to g4sbs executable
+export PATH="Path/To/g4sbs/Exec:$PATH"
 
 # Runs when something call a script from ECALCALIB_PATH
 _find_ecal_script() {
   local script="$1"
-  IFS=':' read -ra dirs <<< "$ECALCALIB_PATH"
-  for d in "${dirs[@]}"; do
+  # split ECALCALIB_PATH into array
+  local dirs
+  dirs=(${(s/:/)ECALCALIB_PATH})
+
+  for d in $dirs; do
     if [[ -f "$d/$script" ]]; then
       echo "$d/$script"
       return 0
     fi
   done
-  # if not found, return as-is
+
+  # if not found, return original name
   echo "$script"
   return 1
 }
