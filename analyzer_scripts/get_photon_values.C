@@ -15,7 +15,8 @@
 
 
 
-void get_photon_values(const char *fname="10K_pi0_Ecal_cal.root") {
+// void get_photon_values(const char *fname="10K_pi0_Ecal_cal.root") {
+void get_photon_values(const char *fname="/Users/rr/jlabHallASoftware/EcalCalibration/analyzer_scripts/10K_pi0_Ecal_cal.root") {
 
   // Open file and tree
   TFile *f = TFile::Open(fname);
