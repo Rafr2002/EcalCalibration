@@ -1,0 +1,95 @@
+#Random seed
+Rseed 0
+#global trigger jitter for all detectors in ns
+TriggerJitter 3.0 
+#list of detectors to digitize
+detectors_list ecal
+
+## parameters for ecal
+refindex_ecal 1.6477
+NChan_ecal 1656
+gatewidth_ecal 200 
+gain_ecal 2.9e6
+ped_ecal 300.0 
+pedsigma_ecal 3.0 
+trigoffset_ecal 15.7 
+threshold_ecal 22.0e-3 
+ADCconv_ecal 40.0 
+TDCconv_ecal 0.12 
+TDCbits_ecal 16 
+sigmapulse_ecal 40.0 
+
+## parameters for cdet
+NChan_cdet 2352 
+gatewidth_cdet 100 
+gain_cdet 1.0e5
+ped_cdet 500.0 
+pedsigma_cdet 3.0
+trigoffset_cdet 13.6
+threshold_cdet 3.e-3 
+ADCconv_cdet 40.0
+#ADCbits_cdet 12 
+TDCconv_cdet 1.0
+TDCbits_cdet 16 
+sigmapulse_cdet 1.6 
+
+## parameters for hcal
+NChan_hcal 288
+gatewidth_hcal 200 
+gain_hcal 1.0e6
+ped_hcal 300.0 
+pedsigma_hcal 3.0
+trigoffset_hcal 34.5 
+threshold_hcal 22.e-3 
+ADCconv_hcal 40.0 
+TDCconv_hcal 0.12 
+TDCbits_hcal 16 
+FADC_ADCbits 12 
+FADC_sampsize 4.0 
+sigmapulse_hcal 40.0 
+
+## parameters for GEMs
+# number of planes/modules/readout
+NPlanes_ft 28 
+# data acquisition window for ft in ns
+gatewidth_ft 400 
+#number of strips for each plane/module
+nlayers_ft 8
+ft_layer_z 0.0 0.132 0.264 0.396 0.528 0.660 0.792 0.924 
+layer_ft 1 1 2 2 3 3 4 4 5 5 6 6 7 7 7 7 7 7 7 7 8 8 8 8 8 8 8 8 
+nstrips_ft 3968 3456 3968 3456 3840 3840 3840 3840 3840 3840 3840 3840 1280 1536 1280 1536 1280 1536 1280 1536 1280 1536 1280 1536 1280 1536 1280 1536 
+#offset in transport coordinate for each plane/module in meters
+offset_ft -0.165 0 -0.165 0 -0.165 0 -0.165 0 -0.165 0 -0.165 0 -0.933 0 -0.421 0 0.091 0 0.603 0 -0.933 0 -0.421 0 0.091 0 0.603 0
+#strip angle for all BB GEM readouts in degrees
+#RO_angle_ft -30.0 30.0 -30.0 30.0 -30.0 30.0 -30.0 30.0 -30.0 30.0 -30.0 30.0 0.0 90.0 0.0 90.0 0.0 90.0 0.0 90.0 0.0 90.0 0.0 90.0 0.0 90.0 0.0 90.0
+RO_angle_ft 0.0 45.0 0.0 -45.0 -30.0 30.0 -30.0 30.0 -30.0 30.0 -30.0 30.0 0.0 90.0 0.0 90.0 0.0 90.0 0.0 90.0 0.0 90.0 0.0 90.0 0.0 90.0 0.0 90.0
+#trigger offsets for all planes in ns
+triggeroffset_ft 124.3 124.7 125.2 125.6 126.1 126.5 126.9 126.9 126.9 126.9 127.4 127.4 127.4 127.4 
+gain_ft 20.
+#zero suppression threshold for GEMs in ADC channels
+ZsupThr_ft 240.
+#common mode value/array for GEMs in ADC channels
+commonmode_array_ft 1500.
+
+# number of planes/modules/readout
+NPlanes_fpp1 64 
+# data acquisition window for fpp1 in ns
+gatewidth_fpp1 400 
+#number of strips for each plane/module
+nlayers_fpp1 8
+fpp1_layer_z 2.074 2.187 2.2985 2.413 2.526 2.639 2.752 2.865
+layer_fpp1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 3 3 3 3 3 3 3 3 4 4 4 4 4 4 4 4 5 5 5 5 5 5 5 5 6 6 6 6 6 6 6 6 7 7 7 7 7 7 7 7 8 8 8 8 8 8 8 8
+nstrips_fpp1 1280 1536 1280 1536 1280 1536 1280 1536 1280 1536 1280 1536 1280 1536 1280 1536 1280 1536 1280 1536 1280 1536 1280 1536 1280 1536 1280 1536 1280 1536 1280 1536 1280 1536 1280 1536 1280 1536 1280 1536 1280 1536 1280 1536 1280 1536 1280 1536 1280 1536 1280 1536 1280 1536 1280 1536 1280 1536 1280 1536 1280 1536 1280 1536 
+#offset in transport coordinate for each plane/module in meters
+offset_fpp1 -1.109 0 -0.597 0 -0.085 0 0.427 0 -1.109 0 -0.597 0 -0.085 0 0.427 0 -1.109 0 -0.597 0 -0.085 0 0.427 0 -1.109 0 -0.597 0 -0.085 0 0.427 0 -1.109 0 -0.597 0 -0.085 0 0.427 0 -1.109 0 -0.597 0 -0.085 0 0.427 0 -1.109 0 -0.597 0 -0.085 0 0.427 0 -1.109 0 -0.597 0 -0.085 0 0.427 0
+#strip angle for all BB GEM readouts in degrees
+RO_angle_fpp1 0.0 90.0 0.0 90.0 0.0 90.0 0.0 90.0 0.0 90.0 0.0 90.0 0.0 90.0 0.0 90.0 0.0 90.0 0.0 90.0 0.0 90.0 0.0 90.0 0.0 90.0 0.0 90.0 0.0 90.0 0.0 90.0 0.0 90.0 0.0 90.0 0.0 90.0 0.0 90.0 0.0 90.0 0.0 90.0 0.0 90.0 0.0 90.0 0.0 90.0 0.0 90.0 0.0 90.0 0.0 90.0 0.0 90.0 0.0 90.0 0.0 90.0 0.0 90.0 
+#trigger offsets for all planes in ns
+triggeroffset_fpp1 131.2 131.2 131.2 131.2 131.6 131.6 131.6 131.6 132.0 132.0 132.0 132.0 132.3 132.3 132.3 132.3 132.7 132.7 132.7 132.7 133.1 133.1 133.1 133.1 133.5 133.5 133.5 133.5 133.9 133.9 133.9 133.9 
+gain_fpp1 20.
+#zero suppression threshold for GEMs in ADC channels
+ZsupThr_fpp1 240.
+#common mode value/array for GEMs in ADC channels
+commonmode_array_fpp1 1500.
+
+endconfig
