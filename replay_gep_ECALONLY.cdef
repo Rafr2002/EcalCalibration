@@ -1,0 +1,8 @@
+# Add cuts here
+
+Block: Physics
+GoodECAL earm.ecal.nclus>0
+
+Physics_master GoodECAL
+# for online replays don't require a track.
+#Physics_master GoodFrontTrack

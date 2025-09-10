@@ -41,3 +41,4 @@
 *.dwo
 pi0Cal_env_setup.sh
 Digd_10K_pi0_Ecal_cal.root
+Digd_ECALONLY_10K_pi0_Ecal_cal.root

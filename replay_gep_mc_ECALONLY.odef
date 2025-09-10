@@ -1,0 +1,16 @@
+## output variable definition for analysis of all detectors #replay_gmn_mc.C
+
+#include "replay_ECal.odef"
+
+# block MC.simc*
+block MC.mc*
+block *ptridx
+block *sdtridx
+block MC.ptrack*
+block MC.sdtrack*
+
+# Drop GEM/HCal outputs
+# (HCal, FPP/FT GEMs, GRINCH, CDET, etc. are excluded)
+
+# variable MC.bbps_esum
+# variable MC.bbsh_esum

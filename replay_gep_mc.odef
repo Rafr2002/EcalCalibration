@@ -1,0 +1,28 @@
+## output variable definition for analysis of all detectors replay_gmn_mc.C
+
+#include "replay_sbs.odef"
+#include "replay_hcal.odef"
+#include "replay_ECal.odef"
+#include "replay_FTGEM_gep.odef"
+#include "replay_FPPGEM_gep.odef"
+# comment out CDET outputs until a working class is ready
+# #include "replay_cdet.odef"
+#include "replay_gepheep.odef"
+
+# block MC.simc*
+block MC.mc*
+# variable MC.nbbtracks
+# block MC.bbtrack*
+# variable MC.nbbgemhits
+# block MC.bbgemhit*
+block *ptridx
+block *sdtridx
+block *odtridx
+block MC.ptrack*
+block MC.sdtrack*
+block MC.odtrack*
+
+
+
+# variable MC.bbps_esum
+# variable MC.bbsh_esum
