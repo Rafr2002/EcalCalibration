@@ -1,23 +1,6 @@
-#Random seed
-Rseed 0
-#global trigger jitter for all detectors in ns
-TriggerJitter 3.0 
-#list of detectors to digitize
-outfile ecal_dig.root
-detectors_list ecal
+# ECAL-only replay DB config
+experiment   gep
+use_simulated_data   1
 
-## parameters for ecal
-refindex_ecal 1.6477
-NChan_ecal 1656
-gatewidth_ecal 200 
-gain_ecal 2.9e6
-ped_ecal 300.0 
-pedsigma_ecal 3.0 
-trigoffset_ecal 15.7 
-threshold_ecal 22.0e-3 
-ADCconv_ecal 40.0 
-TDCconv_ecal 0.12 
-TDCbits_ecal 16 
-sigmapulse_ecal 40.0 
-
-endconfig
+# Include only the ECAL DB (MC version)
+include db_earm.ecal_mc.dat

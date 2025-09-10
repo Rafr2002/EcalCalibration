@@ -4,7 +4,8 @@
 
 ###################################################################################################################################
 #
-# Produce by Anuruddha Rathnayake (anuruddha@uconn.edu, adr@jlab.org) by adapting a script written by Sean Jeffas. 
+#Rafael Ruiz edited replau_gep_mc_ECALONLY.C to make this script work for ECAL calibration data
+# Original script produce by Anuruddha Rathnayake (anuruddha@uconn.edu, adr@jlab.org) by adapting a script written by Sean Jeffas. 
 # Last Updated: April 1, 2025
 #
 # The purpose of this script is to split up analysis jobs across one or more aonl computers for faster completion of analysis.
@@ -62,7 +63,10 @@ maxstream=0  # Set to 0 to start.
 fname_prefix='gep5' # Set to 'gep5' to analyze main DAQ experiment data.
 
 # Set where the data is stored. 
-export DATA_DIR=/adaqeb1/data1:/adaqeb2/data1:/adaqeb3/data1:/cache/halla/sbs/GEp/raw
+# export DATA_DIR=/adaqeb1/data1:/adaqeb2/data1:/adaqeb3/data1:/cache/halla/sbs/GEp/raw
+# export DATA_DIR=/volatile/halla/sbs/rfruiz:/work/halla/sbs/rfruiz/EcalCalibration/analyzer_scripts
+export DATA_DIR=/volatile/halla/sbs/rfruiz
+
 
 # Loop over EVIO files to see how many segments there are
 iseg=0
