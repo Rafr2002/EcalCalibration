@@ -100,9 +100,9 @@ void replay_gep_mc_ECALONLY(const char* filebase, uint gepconfig, uint nev = -1,
   //**
 
   // Force ECAL-only DB config
-  TString dbconf_file = "/w/halla-scshelf2102/sbs/rfruiz/SBS-replay/DB/db_gep3_conf_ECALONLY.dat";
-  run->SetDbConfFileName(dbconf_file);
-  cout << "Using DB configuration: " << dbconf_file << endl;
+  // TString dbconf_file = "/w/halla-scshelf2102/sbs/rfruiz/SBS-replay/DB/db_gep3_conf_ECALONLY.dat";
+  // run->SetDbConfFileName(dbconf_file);
+  // cout << "Using DB configuration: " << dbconf_file << endl;
   
   TString out_dir = gSystem->Getenv("OUT_DIR");
   if( out_dir.IsNull() )
@@ -125,12 +125,12 @@ void replay_gep_mc_ECALONLY(const char* filebase, uint gepconfig, uint nev = -1,
   TString prefix = gSystem->Getenv("SBS_REPLAY");
   prefix += "/replay/";
   
-  TString odef_filename = "replay_gep_mc.odef";
+  TString odef_filename = "replay_gep_mc_ECALONLY.odef";
   odef_filename.Prepend( prefix );
   analyzer->SetOdefFile( odef_filename );
   
   //added cut list in order to have 
-  TString cdef_filename = "replay_gep_mc.cdef";
+  TString cdef_filename = "replay_gep_mc_ECALONLY.cdef";
   cdef_filename.Prepend( prefix );
   analyzer->SetCutFile( cdef_filename );
 
@@ -154,7 +154,7 @@ void replay_gep_mc_ECALONLY(const char* filebase, uint gepconfig, uint nev = -1,
   //gHaCuts->Clear();
   gHaVars->Clear();
   gHaPhysics->Delete();
-  gHaApps->Delete();
+  gHaApps->Delete(); 
  
   
 }
