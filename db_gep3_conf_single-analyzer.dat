@@ -3,7 +3,7 @@ Rseed 0
 #global trigger jitter for all detectors in ns
 TriggerJitter 3.0 
 #list of detectors to digitize
-detectors_list ecal
+detectors_list hcal ecal cdet ft fpp1 
 
 ## parameters for ecal
 refindex_ecal 1.6477
