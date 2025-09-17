@@ -289,7 +289,8 @@ if (std::string(opt) == "mass") {
 else {// Overlay histos with markers
   bool first = true;
   for (int mode=0; mode<=3; mode++) {
-    TString fnameOut = Form("restrictMode%d.root",mode);
+    // TString fnameOut = Form("restrictMode%d.root",mode);
+    TString fnameOut = Form("OP_track_plots/restrictMode%d.root",mode);
     TFile *fin = TFile::Open(fnameOut,"READ");
     if (!fin || fin->IsZombie()) continue;
 
