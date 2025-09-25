@@ -1,0 +1,167 @@
+#!/bin/bash
+
+##***Generates Pi0 -> photon photon events for ECal calibration***
+
+numEvents=${1:-10}
+
+# Validate input
+if ! [[ "$numEvents" =~ ^[0-9]+$ ]] || [ "$numEvents" -le 0 ]; then
+    echo "Error: Number of events must be a positive integer."
+    exit 1
+fi
+
+bill=1000000000
+mill=1000000
+thous=1000
+
+numEventsname=$numEvents
+
+# Add rounding when dividing
+if [ "$numEvents" -ge "$bill" ]; then
+    numEventsname="$(( (numEvents + bill/2) / bill ))B"
+elif [ "$numEvents" -ge "$mill" ]; then
+    numEventsname="$(( (numEvents + mill/2) / mill ))M"
+elif [ "$numEvents" -ge "$thous" ]; then
+    numEventsname="$(( (numEvents + thous/2) / thous ))K"
+fi
+
+
+# outfile="$PWD/../g4Outs/${numEventsname}_pi0_Ecal_cal.root"
+# outfile="${2:-${numEvents}_pi0_Ecal_cal.root}"   # use $2 if provided, else fallback
+outfile="${2:-${numEventsname}_pi0_Ecal_cal.root}"   # use $2 if provided, else fallback
+
+
+echo "[$(date)] Starting job on host $(hostname)"
+echo "[$(date)] Will write ${numEvents} events to: $outfile"
+echo ""
+
+cat > tmp_pi0.mac <<EOF
+
+    ## Configure G4SBS for gep (Q^2 = 12 GeV^2, 5th pass)
+
+    #values taken from GEP kinematics table
+
+    ## Configure Experiment
+    /g4sbs/exp             gep
+
+    ## Configure the target
+    /g4sbs/target          LH2
+    /g4sbs/targlen         30.0 cm           ## Target Length
+    /g4sbs/targpos         0.0 0.0 -10.03 cm   # target z offset, -9 cm means shift target UPSTREAM
+
+    ## Configure generator settings
+    #/g4sbs/kine            elastic           ## Generator
+
+    /g4sbs/kine            gun           ## Generator
+    /g4sbs/particle pi0
+
+    #use eemin/max for gun
+    /g4sbs/eemin 2.5 GeV #roughly the lower limit of photon energy that can generate a trigger
+    /g4sbs/eemax 6.5 GeV #roughly the upper limit of any (kinematically allowed) photon that can actually reach ECAL
+
+
+    #/g4sbs/kine            wiser           ## Generator
+    #/g4sbs/hadron        pi0
+
+    /g4sbs/runtime         1.0 s
+    /g4sbs/beamcur         50.0 microampere
+    /g4sbs/rasterx         2.0 mm
+    /g4sbs/rastery         2.0 mm
+    /g4sbs/beamE           10.688 GeV
+
+    # commenting out electron angle generation limits for elastic:
+    /g4sbs/thmin           19.0 deg
+    /g4sbs/thmax           34.0 deg
+    /g4sbs/phmin           -37.0 deg
+    /g4sbs/phmax           35.0 deg
+
+    # limits for pi0 in ECal: similar to limits used for electrons, slightly larger
+    #/g4sbs/hthmin 15.0 deg
+    #/g4sbs/hthmax 35.0 deg
+    #/g4sbs/hphmin -40.0 deg
+    #/g4sbs/hphmax  40.0 deg
+    #/g4sbs/ehmin 2.5 GeV #roughly the lower limit of photon energy that can generate a trigger
+    #/g4sbs/ehmax 6.5 GeV #roughly the upper limit of any (kinematically allowed) photon that can actually reach ECAL
+
+    ## Configure standard detector settings
+    /g4sbs/gemres          0.070 mm
+    /g4sbs/hcaldist        10.0 m
+    /g4sbs/hcalvoffset     75.0 cm
+    /g4sbs/sbsclampopt     2
+
+    ## Configure the magnets
+    /g4sbs/bbfield         0
+    #/g4sbs/tosfield        GEP_12map0_newheader.table
+    #/g4sbs/tosfield SBSPortableFieldMap_TwoClamps_PoleShims.table 2
+    #/g4sbs/scalesbsfield     0.53
+    # keep default maximum field for now
+    # assume 2.4 T*m / 1.22 m = 1.97 Tesla
+    #/g4sbs/sbsmagfield     1.97 tesla
+    #/g4sbs/48d48field      1
+
+
+    /g4sbs/tosfield  GEP3mod_map.table
+
+
+
+    /g4sbs/bbang           27.0 deg
+    /g4sbs/bbdist          6.0113 m
+    /g4sbs/sbsang          18.6 deg
+    /g4sbs/48D48dist       1.6281 m
+
+    /g4sbs/usehadronfilter false
+    /g4sbs/leadwallconnect true
+
+    #/control/execute scripts/default_thresholds.mac
+    /g4sbs/totalabs true
+    /g4sbs/treeflag 1
+    /g4sbs/eventstatusevery 10
+    /g4sbs/keepsdtrackinfo all true
+    #/g4sbs/keepsdtrackinfo Harm/HCalScint true
+
+    # FPP configuration options:
+    # option 1: single-analyzer, 8+8 front and back trackers:
+    /g4sbs/gepfppoption 1
+    /g4sbs/FPP1CH2thick 55.88 cm
+
+    # option 2: double-analyzer (both CH2)
+    #/g4sbs/gepfppoption 2
+    #/g4sbs/FPP1CH2thick 55.88 cm
+    #/g4sbs/FPP2CH2thick 55.88 cm
+
+    # option 3: double-analyzer, first analyzer CH2, second analyz
+    #/g4sbs/gepfppoption 3
+    #/g4sbs/FPP1CH2thick 55 cm
+    #/g4sbs/FPP2CH2thick
+
+    /g4sbs/filename        ${outfile}
+    /g4sbs/run             ${numEvents}
+EOF
+
+# Run g4sbs with the generated macro
+g4sbs tmp_pi0.mac
+
+echo "[$(date)] Finished job. Output: $outfile"
+
+start_check=$(date +%s)
+
+# Check if file exists
+if [ ! -e "$outfile" ]; then
+    echo "ERROR: Output file $outfile is missing!"
+    # exit 2
+fi
+
+# Check if file is empty
+if [ ! -s "$outfile" ]; then
+    echo "ERROR: Output file $outfile exists but is empty!"
+    # exit 3
+fi
+
+# Verify ROOT file is not a zombie
+if ! root -l -b -q -e "TFile f(\"$outfile\"); if(f.IsZombie()) exit(1);" ; then
+    echo "ERROR: Output file $outfile is a zombie (corrupted)!"
+    # exit 3
+fi
+
+end_check=$(date +%s)
+echo "Check happened $((end_check - start_check)) seconds after g4sbs finished."
